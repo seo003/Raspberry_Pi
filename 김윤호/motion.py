@@ -13,7 +13,6 @@ try:
 
     time.sleep(500);
 
-#Keyboard Interrupt like " Ctrl + C "
 except KeyboardInterrupt:
     print("program exit")
 
