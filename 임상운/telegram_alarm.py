@@ -5,7 +5,7 @@ from telegram.ext import Application, CommandHandler
 import nest_asyncio
 
 # 텔레그램 봇 설정
-TOKEN = '7508403757:AAESjFEwlQ2MMkTUY7XcxgL5u9ZoS97rWsM'  # 여기에 본인의 봇 토큰을 입력하세요.
+TOKEN = ''  # 여기에 본인의 봇 토큰을 입력하세요.
 
 # 데이터베이스 연결
 conn = sqlite3.connect('users.db')
