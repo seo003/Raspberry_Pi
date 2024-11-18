@@ -1,3 +1,4 @@
+#아직 테스트 안해서 되는지는 모름
 import time
 import board
 import adafruit_adxl34x
