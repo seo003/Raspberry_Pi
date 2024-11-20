@@ -31,13 +31,13 @@ def check_motion():
     else:
         if motion_detected:
             if time.time() - motion_start_time > motion_duration:
-                return 1  # 5초 이상 움직였으면 1 출력
+                return True  # 5초 이상 움직였으면 1 출력
         motion_detected = False
         stop_start_time = stop_start_time or time.time()
 
     # 3분간 정지 상태 체크
     if stop_start_time and time.time() - stop_start_time > stop_duration:
-        return 0  # 3분간 움직이지 않으면 0 출력
+        return False  # 3분간 움직이지 않으면 0 출력
 
     return None
 
