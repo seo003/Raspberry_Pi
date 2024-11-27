@@ -1,3 +1,4 @@
+import asyncio
 import time
 import board
 import adafruit_adxl34x
@@ -16,50 +17,51 @@ STOP_DURATION = 180  # 정지 상태 감지 시간 (3분)
 MOTION_DURATION = 5  # 움직임 감지 지속 시간 (5초)
 
 
-def check_motion():
+async def monitor_motion_and_stop():
     """
-    움직임 및 정지 상태를 확인하고 결과를 반환합니다.
-    True: 5초 이상 움직임 지속
-    False: 3분 이상 정지
-    None: 조건 충족 안 됨
+    움직임과 정지 상태를 하나의 함수에서 감지합니다.
+    움직임이 5초 이상 지속되면 True 출력,
+    정지 상태가 3분 이상 지속되면 False 출력.
     """
     global motion_detected, motion_start_time, stop_start_time
 
-    # 가속도 값 읽기
-    x, y, z = sensor.acceleration
-    total_acceleration = (x**2 + y**2 + z**2) ** 0.5
+    while True:
+        # 가속도 값 읽기
+        x, y, z = sensor.acceleration
+        total_acceleration = (x**2 + y**2 + z**2) ** 0.5
 
-    # 움직임 감지
-    if total_acceleration > MOTION_THRESHOLD:
-        if not motion_detected:  # 움직임 시작 시점 기록
-            motion_start_time = time.time()
-        motion_detected = True
-        stop_start_time = None  # 정지 상태 초기화
+        # 움직임 감지
+        if total_acceleration > MOTION_THRESHOLD:
+            if not motion_detected:
+                motion_start_time = time.time()  # 움직임 시작 시간 기록
+            motion_detected = True
+            stop_start_time = None  # 정지 상태 초기화
 
-        # 움직임이 5초 이상 지속되었는지 확인
-        if motion_start_time and time.time() - motion_start_time >= MOTION_DURATION:
-            return True  # 5초 이상 움직임 지속 감지 완료
-    else:
-        motion_detected = False
-        motion_start_time = None  # 움직임 초기화
-
-        # 정지 상태 시작 시점 기록
-        if stop_start_time is None:
-            stop_start_time = time.time()
-        elif time.time() - stop_start_time >= STOP_DURATION:
-            return False  # 3분 이상 정지 상태 감지 완료
-
-    return None  # 조건 충족 안 됨
-
-
-# 메인 루프
-while True:
-    result = check_motion()
-    if result is not None:
-        if result:
-            print("움직임 감지: 5초 이상 지속")
+            # 움직임이 5초 이상 지속되었는지 확인
+            if motion_start_time and time.time() - motion_start_time >= MOTION_DURATION:
+                print("움직임 감지: 5초 이상 지속")
+                motion_start_time = None  # 상태 초기화
         else:
-            print("정지 상태: 3분 이상 지속")
-        stop_start_time = None  # 결과 출력 후 상태 초기화
+            # 움직임이 없는 상태
+            motion_detected = False
+            motion_start_time = None  # 움직임 초기화
 
-    time.sleep(1)  # 1초 간격으로 체크
+            # 정지 상태 시작 시간 기록
+            if stop_start_time is None:
+                stop_start_time = time.time()
+            elif time.time() - stop_start_time >= STOP_DURATION:
+                print("정지 상태: 3분 이상 지속")
+                stop_start_time = None  # 상태 초기화
+
+        await asyncio.sleep(0.1)  # 0.1초 간격으로 반복
+
+
+async def main():
+    """
+    움직임과 정지 상태 감지 루프 실행.
+    """
+    await monitor_motion_and_stop()
+
+
+# 비동기 루프 실행
+asyncio.run(main())
