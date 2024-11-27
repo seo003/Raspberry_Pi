@@ -3,9 +3,14 @@ import sqlite3
 from telegram import Update
 from telegram.ext import Application, CommandHandler
 import nest_asyncio
+from dotenv import load_dotenv
+import os
 
 # 텔레그램 봇 설정
-TOKEN = ''  # 봇 토큰 나중에 입력해야됌.
+TOKEN = os.environ.get('TOKEN')
+
+load_dotenv()
+
 
 # 데이터베이스 연결
 conn = sqlite3.connect('users.db')
