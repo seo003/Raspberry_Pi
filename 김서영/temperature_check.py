@@ -60,4 +60,5 @@ def run_temperature_check():
             else:
                 print("Result: False")
                 
-
+if __name__ == "__main__":
+    run_temperature_check()
