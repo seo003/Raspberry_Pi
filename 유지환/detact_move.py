@@ -16,48 +16,50 @@ STOP_DURATION = 180  # 정지 상태 감지 시간 (3분)
 MOTION_DURATION = 5  # 움직임 감지 지속 시간 (5초)
 
 
-def is_motion_detected():
+def check_motion():
     """
-    현재 센서 값을 기반으로 움직임이 감지되었는지 확인합니다.
-    """
-    x, y, z = sensor.acceleration
-    total_acceleration = (x**2 + y**2 + z**2) ** 0.5
-    return total_acceleration > MOTION_THRESHOLD
-
-
-def check_motion_and_stop():
-    """
-    움직임과 정지 상태를 확인하고 결과를 반환합니다.
+    움직임 및 정지 상태를 확인하고 결과를 반환합니다.
+    True: 5초 이상 움직임 지속
+    False: 3분 이상 정지
+    None: 조건 충족 안 됨
     """
     global motion_detected, motion_start_time, stop_start_time
 
-    if is_motion_detected():
-        if not motion_detected:
-            # 움직임 시작 시각 기록
+    # 가속도 값 읽기
+    x, y, z = sensor.acceleration
+    total_acceleration = (x**2 + y**2 + z**2) ** 0.5
+
+    # 움직임 감지
+    if total_acceleration > MOTION_THRESHOLD:
+        if not motion_detected:  # 움직임 시작 시점 기록
             motion_start_time = time.time()
         motion_detected = True
         stop_start_time = None  # 정지 상태 초기화
-    else:
-        if motion_detected and time.time() - motion_start_time >= MOTION_DURATION:
-            # 움직임이 5초 이상 지속된 경우
-            motion_detected = False
-            return True  # 움직임 감지 완료
 
+        # 움직임이 5초 이상 지속되었는지 확인
+        if motion_start_time and time.time() - motion_start_time >= MOTION_DURATION:
+            return True  # 5초 이상 움직임 지속 감지 완료
+    else:
+        motion_detected = False
+        motion_start_time = None  # 움직임 초기화
+
+        # 정지 상태 시작 시점 기록
         if stop_start_time is None:
-            stop_start_time = time.time()  # 정지 상태 시작 시각 기록
+            stop_start_time = time.time()
         elif time.time() - stop_start_time >= STOP_DURATION:
-            # 정지 상태가 3분 이상 지속된 경우
-            motion_detected = False
-            return False  # 정지 상태 감지 완료
+            return False  # 3분 이상 정지 상태 감지 완료
 
     return None  # 조건 충족 안 됨
 
 
 # 메인 루프
 while True:
-    result = check_motion_and_stop()
+    result = check_motion()
     if result is not None:
-        print("Result:", result)  # True: 움직임, False: 정지
+        if result:
+            print("움직임 감지: 5초 이상 지속")
+        else:
+            print("정지 상태: 3분 이상 지속")
         stop_start_time = None  # 결과 출력 후 상태 초기화
 
     time.sleep(1)  # 1초 간격으로 체크
