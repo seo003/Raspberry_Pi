@@ -11,9 +11,10 @@ sensor = adafruit_adxl34x.ADXL345(i2c)
 motion_detected = False
 motion_start_time = None
 stop_start_time = None
+is_move = False
 
-MOTION_THRESHOLD = 0.1  # 움직임 감지 기준 (예: 0.1g 이상의 가속도)
-STOP_DURATION = 180  # 정지 상태 감지 시간 (3분)
+MOTION_THRESHOLD = 10  # 움직임 감지 기준 (10g 이상의 가속도)
+STOP_DURATION = 5  # 정지 상태 감지 시간 (3분)
 MOTION_DURATION = 5  # 움직임 감지 지속 시간 (5초)
 
 
@@ -23,7 +24,7 @@ async def monitor_motion_and_stop():
     움직임이 5초 이상 지속되면 True 출력,
     정지 상태가 3분 이상 지속되면 False 출력.
     """
-    global motion_detected, motion_start_time, stop_start_time
+    global motion_detected, motion_start_time, stop_start_time, is_move
 
     while True:
         # 가속도 값 읽기
@@ -41,6 +42,7 @@ async def monitor_motion_and_stop():
             if motion_start_time and time.time() - motion_start_time >= MOTION_DURATION:
                 print("움직임 감지: 5초 이상 지속")
                 motion_start_time = None  # 상태 초기화
+                is_move=True
         else:
             # 움직임이 없는 상태
             motion_detected = False
@@ -52,9 +54,10 @@ async def monitor_motion_and_stop():
             elif time.time() - stop_start_time >= STOP_DURATION:
                 print("정지 상태: 3분 이상 지속")
                 stop_start_time = None  # 상태 초기화
-
-        await asyncio.sleep(0.1)  # 0.1초 간격으로 반복
-
+                is_move = False
+        
+        print(is_move)
+        await asyncio.sleep(1)  # 1초 간격으로 반복
 
 async def main():
     """
