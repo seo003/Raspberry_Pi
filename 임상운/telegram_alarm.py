@@ -6,7 +6,7 @@ import nest_asyncio
 from dotenv import load_dotenv
 import os
 
-# 텔레그램 봇 설정
+# 텔레그램 봇 설정ㅌ
 TOKEN = os.environ.get('TOKEN')
 
 load_dotenv()
