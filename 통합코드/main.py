@@ -19,25 +19,42 @@ async def main():
             print("주기적 점검을 수행합니다.")
             
             if not car_stopped:
-                await asyncio.sleep(10)  # 차량 정차 시뮬레이션 대기 시간
+                await asyncio.sleep(20)  # 차량 정차 시뮬레이션 대기 시간
                 
                 car_stopped = True
-                
                 print("차량 정차 상태로 변경. 알림 전송 중...")
                 for sensor_number in active_sensors:
                     await telegram_alarm.handle_car_stop(application, sensor_number)
                 
                 print("3분 대기 중...")
-                await asyncio.sleep(60)  # 대기 시간
+                await asyncio.sleep(20)  # 대기 시간
                 
             print("모션 및 온도 체크 중...")
             
-            if motion_detector.detect_motion() and temp_checker.check_temperature():
-                print("모션 또는 고온 감지가 발생했습니다. 알림 전송 중...")
-                for sensor_number in active_sensors:
-                    await telegram_alarm.send_detection_alert(application, sensor_number)
+            while(True):
+                print("온도를 감지 중...")
+                # 고온 감지
+                if await temp_checker.check_temperature():
+                    while(True):
+                        print("모션 센서를 감지 중...")
+                        # 모션 센서 감지(총 3번 감지 되면 true)
+                        if motion_detector.detect_motion():
+                            print("고온 감지 및 모션 감지가 발생했습니다. 알림 전송 중...")
+                            for sensor_number in active_sensors:
+                                await telegram_alarm.send_detection_alert(application, sensor_number)
+                            break
+                            
+                        await asyncio.sleep(5)  # 다음 점검까지 
+                            
+               
+                
+                
+            #if motion_detector.detect_motion() and temp_checker.check_temperature():
+             #   print("모션 또는 고온 감지가 발생했습니다. 알림 전송 중...")
+              #  for sensor_number in active_sensors:
+               #     await telegram_alarm.send_detection_alert(application, sensor_number)
             
-            await asyncio.sleep(5)  # 다음 점검까지 대기
+          #  await asyncio.sleep(5)  # 다음 점검까지 대기
 
     async def handle_new_user(update: telegram_alarm.Update, context):
         print("새 사용자 등록 시도 중...")
