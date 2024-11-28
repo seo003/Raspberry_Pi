@@ -10,7 +10,7 @@ load_dotenv()
 TOKEN = os.getenv('TOKEN')
 
 # 데이터베이스 연결
-conn = sqlite3.connect('users.db')
+conn = sqlite3.connect('database/users.db')
 cursor = conn.cursor()
 
 # 사용자 테이블 생성 (없는 경우)

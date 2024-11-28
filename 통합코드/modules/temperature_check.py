@@ -30,7 +30,7 @@ def isOver30Degree(data):
     print(f"온도: {temp:.2f}")
 
     # 30도 이상이면 True, 아니면 False 
-    return temp >= 20
+    return temp >= 30
 
 class TemperatureChecker:
     def __init__(self, serial=serial, baud_rate=BAUD_RATE):

@@ -1,8 +1,8 @@
 import asyncio
 import nest_asyncio
-from motion import MotionDetector
-from temperature_check import TemperatureChecker
-import telegram_alarm
+from modules.motion import MotionDetector
+from modules.temperature_check import TemperatureChecker
+import modules.telegram_alarm as telegram_alarm
 
 async def main():
     application = telegram_alarm.create_telegram_app()
