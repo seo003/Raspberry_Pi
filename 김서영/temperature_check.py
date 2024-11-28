@@ -10,7 +10,7 @@ import time
 AM_OSCILLOSCOPE = 0x93
 
 # 포트 설정
-SERIAL_PORT = "/dev/ttyUSB0"
+SERIAL_PORT = "/dev/ttyUSB1"
 BAUD_RATE = 115200
 
 class TemperatureMsg(tos.Packet):
@@ -28,7 +28,7 @@ serial = tos.Serial(SERIAL_PORT, BAUD_RATE)
 
 am = tos.AM(serial)
 
-def start_temperature_check(data0):
+def isOver30Degree(data0):
     """
     온도 값이 30도 이상인지 확인하는 함수
     """
@@ -38,27 +38,25 @@ def start_temperature_check(data0):
     # 30도 이상이면 True, 아니면 False 
     return temp >= 30
 
-def run_temperature_check():
+def check_temperature():
     """
     온도를 주기적으로 체크하고, 30도 이상일 때 True 반환
     """
-    while True:
-        p = am.read()
-        msg = TemperatureMsg(p.data)
+    p = am.read()
+    msg = TemperatureMsg(p.data)
+    if msg.type == 2: 
+        # 온도 값만 추출
+        temp = -(39.6) + (msg.Data0 * 0.01)
 
-        if msg.type == 2: 
-            # 온도 값만 추출
-            temp = -(39.6) + (msg.Data0 * 0.01)
-
-            # 결과 출력
-            print(f"Temperature: {temp}°C")
-            
-            # 온도가 30도 이상인지 확인
-            if start_temperature_check(msg.Data0):
-                print("Result: True")
-                return True
-            else:
-                print("Result: False")
+        # 결과 출력
+        print(f"온도: {temp}°C")
+        
+        # 온도가 30도 이상인지 확인
+        if isOver30Degree(msg.Data0):
+            print("Result: True")
+            return True
+        else:
+            print("Result: False")
                 
 if __name__ == "__main__":
-    run_temperature_check()
+    check_temperature()
