@@ -1,7 +1,3 @@
-주어진 코드는 차량 정차 상태 및 고온/모션 상태를 확인하고, 특정 조건 충족 시 알림을 보내는 시스템입니다. 그러나 현재 구조에서는 모든 사용자가 공유된 active_sensors 집합과 periodic_check 루프를 사용하기 때문에 사용자별로 독립적으로 동작하지 않습니다. 이를 해결하려면 사용자별 데이터와 주기적 점검 루프를 분리해야 합니다.
-
-다음은 수정된 코드입니다:
-
 import asyncio
 import nest_asyncio
 from modules.motion import MotionDetector
@@ -69,27 +65,3 @@ async def main():
 if __name__ == '__main__':
     nest_asyncio.apply()
     asyncio.run(main())
-
-주요 변경 사항:
-
-1. 사용자별 데이터 관리:
-
-user_sessions 딕셔너리를 도입하여 사용자별로 sensor_number를 저장했습니다.
-
-
-
-2. 사용자별 periodic_check 함수 분리:
-
-periodic_check 함수를 사용자 ID와 센서 번호를 매개변수로 받도록 수정하여 독립적인 작업이 가능하도록 했습니다.
-
-
-
-3. handle_new_user 로직 변경:
-
-새 사용자가 등록되면 해당 사용자 ID와 센서 번호를 저장하고, 해당 사용자 전용 periodic_check 루프를 실행합니다.
-
-
-
-
-이제 각 사용자는 독립적으로 periodic_check를 실행하며, 다른 사용자와 간섭 없이 동작합니다.
-
