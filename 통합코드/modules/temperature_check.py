@@ -4,7 +4,7 @@ import time
 AM_OSCILLOSCOPE = 0x93
 
 # 포트 설정
-SERIAL_PORT = "/dev/ttyUSB1"
+SERIAL_PORT = "/dev/ttyUSB0"
 BAUD_RATE = 115200
 
 class TemperatureMsg(tos.Packet):
