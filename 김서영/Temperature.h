@@ -2,22 +2,19 @@
 #define TEMPERATURE_H
 
 enum {
-  /* Number of readings per message. If you increase this, you may have to
-     increase the message_t size. */
   NREADINGS = 10,
 
-  /* Default sampling period. */
   DEFAULT_INTERVAL = 256,
 
   AM_OSCILLOSCOPE = 0x93
 };
 
 typedef nx_struct oscilloscope {
-  nx_uint16_t version; /* Version of the interval. */
-  nx_uint16_t interval; /* Sampling period. */
-  nx_uint16_t id; /* Mote id of sending mote. */
-  nx_uint16_t count; /* The readings are samples count * NREADINGS onwards */
-  nx_uint16_t readings[NREADINGS];
+  nx_uint16_t version; /* 버전 */
+  nx_uint16_t interval; /* 주기 */
+  nx_uint16_t id; /* ID */
+  nx_uint16_t count; /* 샘플 데이터  */
+  nx_uint16_t readings[NREADINGS]; /* 온도 데이터 저장 배열 */
 } oscilloscope_t;
 
 #endif
