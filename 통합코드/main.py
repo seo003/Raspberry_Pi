@@ -21,14 +21,12 @@ async def main():
             print(f"[센서 {sensor_number}] 주기적 점검을 수행합니다.")
             
             if not car_stopped[sensor_number]:
-                await asyncio.sleep(20)  # 차량 정차 시뮬레이션 대기 시간
-                
                 car_stopped[sensor_number] = await detect_move.monitor_motion_and_stop()
                 print(f"[센서 {sensor_number}] 차량 정차 상태로 변경. 알림 전송 중...")
                 await telegram_alarm.handle_car_stop(application, sensor_number)
                 
                 print(f"[센서 {sensor_number}] 3분 대기 중...")
-                await asyncio.sleep(20)  # 대기 시간
+                await asyncio.sleep(180)  # 대기 시간
                 
             print(f"[센서 {sensor_number}] 모션 및 온도 체크 중...")
             
@@ -42,6 +40,7 @@ async def main():
                         if motion_detector.detect_motion():
                             print(f"[센서 {sensor_number}] 고온 감지 및 모션 감지가 발생했습니다. 알림 전송 중...")
                             await telegram_alarm.send_detection_alert(application, sensor_number)
+                            await asyncio.sleep(3600)  # 대기 시간
                             break
                             
                         await asyncio.sleep(5)  # 다음 점검까지 
