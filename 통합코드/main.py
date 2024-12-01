@@ -53,7 +53,7 @@ async def main():
         
         if new_sensor_number:
             active_sensors.add(new_sensor_number)
-            print(f"새 센서 번호 {new_sensor_number}가 활성 센서 목록에 추가되었습니다.")
+            print(f"센서 번호 {new_sensor_number}가 활성 센서 목록에 추가되었습니다.")
             # 새 사용자 등록 후 periodic_check 시작
             asyncio.create_task(periodic_check(new_sensor_number))
 
