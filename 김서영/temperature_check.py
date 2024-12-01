@@ -30,12 +30,11 @@ am = tos.AM(serial)
 
 def isOver30Degree(data0):
     """
-    온도 값이 30도 이상인지 확인하는 함수
+    온도 값이 30도 이상인지 확인하는 함수 (이상이면 True, 아니면 False)
     """
     # 온도 계산식
     temp = -(39.6) + (data0 * 0.01)
 
-    # 30도 이상이면 True, 아니면 False 
     return temp >= 30
 
 def check_temperature():
