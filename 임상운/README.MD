@@ -6,6 +6,14 @@
 3. 사용자 및 센서 정보를 SQLite 데이터베이스를 통해 관리.
 
 ---
+## PIP LIST
+
+- `pip install python-telegram-bot` 
+- `pip install nest-asyncio` 
+- `pip install pyserial` 
+
+
+----
 
 ## **기능**
 1. **사용자 등록**:
@@ -25,6 +33,14 @@
 ---
 
 ## **주요 함수**
+
+### **2. `start(update, context)`**
+- 텔레그램 `/start` 명령어를 처리합니다.
+- **기능**:
+  - 새로운 사용자를 등록하고 고유 센서 번호를 할당.
+  - 기존 사용자라면 데이터베이스에서 센서 번호를 조회하여 반환.
+
+---
 ### **1. `send_alert(application, chat_id, message)`**
 - 지정된 사용자(`chat_id`)에게 텔레그램 메시지를 전송합니다.
 - **파라미터**:
@@ -32,13 +48,6 @@
   - `chat_id`: 사용자 고유 ID.
   - `message`: 전송할 메시지 내용.
 
----
-
-### **2. `start(update, context)`**
-- 텔레그램 `/start` 명령어를 처리합니다.
-- **기능**:
-  - 새로운 사용자를 등록하고 고유 센서 번호를 할당.
-  - 기존 사용자라면 데이터베이스에서 센서 번호를 조회하여 반환.
 
 ---
 
