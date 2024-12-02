@@ -13,7 +13,7 @@ motion_start_time = None
 stop_start_time = None
 is_move = False
 
-MOTION_THRESHOLD = 10  # 움직임 감지 기준 (10g 이상의 가속도)
+MOTION_THRESHOLD = 12  # 움직임 감지 기준 (10g 이상의 가속도)
 STOP_DURATION = 5  # 정지 상태 감지 시간 (3분)
 MOTION_DURATION = 5  # 움직임 감지 지속 시간 (5초)
 
