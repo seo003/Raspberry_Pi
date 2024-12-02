@@ -56,7 +56,8 @@ async def monitor_motion_and_stop():
                 stop_start_time = None  # 상태 초기화
                 is_move = False
         
-        print(is_move)
+        print('정차 여부: ', is_move)
+        print('가속도: ', total_acceleration)
         await asyncio.sleep(1)  # 1초 간격으로 반복
 
 async def main():
