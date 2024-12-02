@@ -42,7 +42,7 @@ async def monitor_motion_and_stop():
             if motion_start_time and time.time() - motion_start_time >= MOTION_DURATION:
                 print("움직임 감지: 5초 이상 지속")
                 motion_start_time = None  # 상태 초기화
-                is_move=True
+                is_move=False
         else:
             # 움직임이 없는 상태
             motion_detected = False
@@ -54,7 +54,7 @@ async def monitor_motion_and_stop():
             elif time.time() - stop_start_time >= STOP_DURATION:
                 print("정지 상태: 3분 이상 지속")
                 stop_start_time = None  # 상태 초기화
-                is_move = False
+                is_move = True
         
         print('정차 여부: ', is_move)
         print('가속도: ', total_acceleration)
