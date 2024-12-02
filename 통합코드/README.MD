@@ -19,22 +19,21 @@
 ```
 
 ## Main.py
-
 ### 1. 텔레그램 봇 생성 및 모듈 초기화
    - 필요한 모듈들을 초기화하고, 텔레그램 봇 생성
-    ```
-    application = telegram_alarm.create_telegram_app()
+```
+application = telegram_alarm.create_telegram_app()
 
-    motion_detector = MotionDetector()
-    temp_checker = TemperatureChecker()
-    ```
+motion_detector = MotionDetector()
+temp_checker = TemperatureChecker()
+```
 
-### 2. Telegram Bot Polling 시작  
-    - 텔레그램 봇은 `Polling` 모드를 통해 명령어를 기다리고 처리
-    -  `/start` 명령어가 들어오면 `handle_new_user` 함수 실행
-    ```
-    await application.run_polling(allowed_updates=telegram_alarm.Update.ALL_TYPES)
-    ```
+### 2. Telegram Bot Polling 시작
+  - 텔레그램 봇은 `Polling` 모드를 통해 명령어를 기다리고 처리
+  - `/start` 명령어가 들어오면 `handle_new_user` 함수 실행
+```
+await application.run_polling(allowed_updates=telegram_alarm.Update.ALL_TYPES)
+```
 
 ### 3. 센서 감지 (periodic_check)
    - 주기적으로 센서를 감지하여 알림 전송
