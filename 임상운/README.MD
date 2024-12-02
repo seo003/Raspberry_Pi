@@ -68,8 +68,3 @@
 
 ---
 
-## **사용 방법**
-### **1. 환경 변수 설정**
-`.env` 파일에 텔레그램 봇 토큰을 추가합니다:
-```plaintext
-TOKEN=your_telegram_bot_token
