@@ -62,7 +62,7 @@ await application.run_polling(allowed_updates=telegram_alarm.Update.ALL_TYPES)
 ### 📱 텔레그램 실행 화면
 | DB에 사용자가 없을 시 | DB에 사용자가 존재할 시 | 
 | --- | --- | 
-| ![telegramStart](https://github.com/user-attachments/assets/26bccb5e-dc7b-4a8c-8796-9b7552194f2a) | ![telegramAlready](https://github.com/user-attachments/assets/58edcaf4-ae33-4429-91bc-680984cc1dd8) |
+| ![start](https://github.com/user-attachments/assets/918e2a60-5aa9-4a3f-8ed6-8b382194796b) | ![startalready](https://github.com/user-attachments/assets/6b274b8d-d1da-4db8-87c3-8ff98ef8f0a1) |
 
 ### 💻 CMD 디버깅 코드
 | 사용자 등록 및 가속도 센서 | 
