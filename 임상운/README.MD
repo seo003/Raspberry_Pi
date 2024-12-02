@@ -34,39 +34,54 @@
 
 ## **주요 함수**
 
+
+### **1. `handle_new_user(update, context)`**
+- 새 사용자가 등록될 때 호출되는 함수
+- **기능**:
+   - telegram_alarm.py의 start 함수를 호출하여 새 사용자를 등록하고 고유한 센서 번호를 할당
+   - 새로 할당된 센서 번호를 활성 센서 목록(active_sensors)에 추가
+   - 등록 완료 후 periodic_check 함수를 호출하여 해당 센서에 대한 주기적 점검 시작
+- **특이사항**:
+   - 이 함수는 원래 telegram_alarm.py에 포함되어야 하지만, periodic_check 함수가 main.py에 정의되어 있기 때문에 main.py에 배치되어 있음.
+   - periodic_check(senser_number) : 센서 상태 점검 및 이벤트 발생 시 알람 함수 호출
+
+
+
+---
+
 ### **2. `start(update, context)`**
-- 텔레그램 `/start` 명령어를 처리합니다.
+- 텔레그램 `/start` 명령어를 처리
 - **기능**:
-  - 새로운 사용자를 등록하고 고유 센서 번호를 할당.
-  - 기존 사용자라면 데이터베이스에서 센서 번호를 조회하여 반환.
+  - 새로운 사용자를 등록하고 고유 센서 번호를 할당
+  - 기존 사용자라면 데이터베이스에서 센서 번호를 조회하여 반환
 
 ---
-### **1. `send_alert(application, chat_id, message)`**
-- 지정된 사용자(`chat_id`)에게 텔레그램 메시지를 전송합니다.
+### **3. `send_alert(application, chat_id, message)`**
+- 지정된 사용자(`chat_id`)에게 텔레그램 메시지를 전송
 - **파라미터**:
-  - `application`: 텔레그램 봇 인스턴스.
-  - `chat_id`: 사용자 고유 ID.
-  - `message`: 전송할 메시지 내용.
+  - `application`: 텔레그램 봇 인스턴스
+  - `chat_id`: 사용자 고유 ID
+  - `message`: 전송할 메시지 내용
 
 
 ---
 
-### **3. `handle_car_stop(application, sensor_number)`**
-- 차량 정차 감지 시 호출됩니다.
+### **4. `handle_car_stop(application, sensor_number)`**
+- 차량 정차 감지 시 호출
 - **기능**:
-  - 센서 번호와 연결된 사용자를 찾아 "차량 정차" 알림 전송.
+  - 센서 번호와 연결된 사용자를 찾아 "차량 정차" 알림 전송
 
 ---
 
-### **4. `send_detection_alert(application, sensor_number)`**
-- 고온 및 모션 감지 시 호출됩니다.
+### **5. `send_detection_alert(application, sensor_number)`**
+- 고온 및 모션 감지 시 호출
 - **기능**:
-  - 위험 상황 발생 시 해당 센서와 연결된 사용자에게 텔레그램 메시지로 알림 전송.
+  - 위험 상황 발생 시 해당 센서와 연결된 사용자에게 텔레그램 메시지로 알림 전송
 
 ---
 
-### **5. `create_telegram_app()`**
-- 텔레그램 봇 애플리케이션을 초기화하고 설정합니다.
+### **6. `create_telegram_app()`**
+- 텔레그램 봇 애플리케이션을 초기화하고 설정
 
 ---
 
