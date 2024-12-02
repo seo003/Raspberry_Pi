@@ -89,29 +89,30 @@
   * `time.time()`: 현재 시간을 반환하는 함수로, 차량의 움직임 시작 시간과 정지 시간을 기록하고, 두 시간 간의 차이를 계산하여 차량의 이동 여부와 정지 시간을 확인합니다.
 
   ```python
-  if total_acceleration > MOTION_THRESHOLD:
-              if not motion_detected:
-                  motion_start_time = time.time()  # 움직임 시작 시간 기록
-              motion_detected = True
-              stop_start_time = None  # 정지 상태 초기화
-  
-              # 움직임이 5초 이상 지속되었는지 확인
-              if motion_start_time and time.time() - motion_start_time >= MOTION_DURATION:
-                  print("움직임 감지: 5초 이상 지속")
-                  motion_start_time = None  # 상태 초기화
-                  is_move = False
-          else:
-              # 움직임이 없는 상태
-              motion_detected = False
-              motion_start_time = None  # 움직임 초기화
-  
-              # 정지 상태 시작 시간 기록
-              if stop_start_time is None:
-                  stop_start_time = time.time()
-              elif time.time() - stop_start_time >= STOP_DURATION:
-                  print("정지 상태: 3분 이상 지속")
-                  stop_start_time = None  # 상태 초기화
-                  is_move = True
+  # 움직임 감지
+        if total_acceleration > MOTION_THRESHOLD:
+            if not motion_detected:
+                motion_start_time = time.time()  # 움직임 시작 시간 기록
+            motion_detected = True
+            stop_start_time = None  # 정지 상태 초기화
+
+            # 움직임이 5초 이상 지속되었는지 확인
+            if motion_start_time and time.time() - motion_start_time >= MOTION_DURATION:
+                print("움직임 감지: 5초 이상 지속")
+                motion_start_time = None  # 상태 초기화
+                is_move=False
+        else:
+            # 움직임이 없는 상태
+            motion_detected = False
+            motion_start_time = None  # 움직임 초기화
+
+            # 정지 상태 시작 시간 기록
+            if stop_start_time is None:
+                stop_start_time = time.time()
+            elif time.time() - stop_start_time >= STOP_DURATION:
+                print("정지 상태: 3분 이상 지속")
+                stop_start_time = None  # 상태 초기화
+                is_move = True
   ```
 
 
