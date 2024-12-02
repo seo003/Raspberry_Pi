@@ -13,8 +13,7 @@ ex) Zigbee
 
 ### 1. Makefile
 - TinyOS 애플리케이션 빌드 설정 파일
-- COMPONENT=TemperatureAppC: 컴포넌트의 진입점을 TemperatureAppC로 지정
-- include $(MAKERULES): TinyOS에서 제공하는 기본 Makefile 규칙을 포함
+-  프로젝트 컴포넌트의 초기화 및 TinyOS에서 제공하는 기본 빌드 규칙을 사용하여 애플리케이션을 컴파일하는 데 사용
 
 ### 2. Temperature.h
 - Zigbee 메시지 구조 및 상수를 정의한 헤더 파일
@@ -24,7 +23,7 @@ ex) Zigbee
   **`oscilloscope_t`**: 메시지 구조체로, 센서 ID, 샘플링 주기, 온도 데이터 배열 등 포함
 
 ### 3. TemperatureAppC.nc
-- TinyOS 애플리케이션의 구성 파일입니다.
+- TinyOS 애플리케이션의 구성 파일
 - 구성요소:
   > **`TemperatureC`**: 온도 데이터를 처리하는 핵심 모듈<br>
   **`MainC`**: 시스템 초기화 담당<br>
