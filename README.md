@@ -15,7 +15,7 @@
 | 임상운(202044024) | - 텔레그램 API 개발 | - 차량 정차 및 센서 감지와 같은 이벤트에 대해 사용자에게 알림을 보내는 텔레그램 기반 경고 시스템 설계 및 구현 <br> - SQLite를 활용하여 사용자 데이터 및 센서 할당을 관리하는 데이터베이스 개발 | 
 
 ## ⚙️ 시스템 흐름도
-
+![Telegram bot start](https://github.com/user-attachments/assets/f8de6143-e5ed-408d-a4ef-1c31e06d14c9)
 
 
 ## 📌 기능
