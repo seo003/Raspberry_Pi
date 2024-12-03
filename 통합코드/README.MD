@@ -18,7 +18,7 @@
 └── main.py  
 ```
 
-## Main.py
+## main.py
 ### 1. 텔레그램 봇 생성 및 모듈 초기화
    - 필요한 모듈들을 초기화하고, 텔레그램 봇 생성
 ```
@@ -35,7 +35,7 @@ temp_checker = TemperatureChecker()
 await application.run_polling(allowed_updates=telegram_alarm.Update.ALL_TYPES)
 ```
 
-### 3. 센서 감지 (periodic_check)
+### 3. 센서 감지 (periodic_check())
    - 주기적으로 센서를 감지하여 알림 전송
 
       1. **차량 정차 감지**: `detect_move.py`의 `monitor_motion_and_stop()` 함수가 호출되어 차량이 정차했는지 감지하고, 그 결과로 True 또는 False 반환
