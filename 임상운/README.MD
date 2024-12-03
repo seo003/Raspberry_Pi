@@ -10,7 +10,7 @@
 
 - `pip install python-telegram-bot` 
 - `pip install nest-asyncio` 
-- `pip install pyserial` 
+- `pip install python-dotenv` 
 
 
 ----
